@@ -1,0 +1,55 @@
+# LibreChat Configuration Example for OCR MCP Server
+# Add this to your existing librechat.yaml file
+
+mcpServers:
+  ocr:
+    # Option 1: Using uvx (recommended)
+    command: "uvx"
+    args: ["ocr-mcp"]
+    
+    # Option 2: Using python directly
+    # command: "python"
+    # args: ["-m", "ocr_mcp.server"]
+    
+    # Environment variables
+    env:
+      # Required API Key (Mistral)
+      MISTRAL_API_KEY: "your-mistral-api-key-here"
+      
+      # Optional: DeepSeek API Key (only needed if deepseek is enabled)
+      # DEEPSEEK_API_KEY: "your-deepseek-api-key-here"
+      
+      # Backend Configuration
+      # Available backends: marker, deepseek, mistral
+      # Default: marker (local) + mistral (API fallback)
+      ENABLED_BACKENDS: "marker,mistral"
+      
+      # Default backend (must be in ENABLED_BACKENDS)
+      DEFAULT_BACKEND: "marker"
+      
+      # Optional: Processing settings
+      MAX_FILE_SIZE_MB: "50"
+      TIMEOUT_SECONDS: "120"
+      API_TIMEOUT: "30"
+      API_MAX_RETRIES: "3"
+      MARKER_BATCH_SIZE: "1"
+
+# Example: Minimal configuration (Marker only - no API keys needed)
+# mcpServers:
+#   ocr:
+#     command: "uvx"
+#     args: ["ocr-mcp"]
+#     env:
+#       ENABLED_BACKENDS: "marker"
+#       DEFAULT_BACKEND: "marker"
+
+# Example: Add DeepSeek later (when you have the API key)
+# mcpServers:
+#   ocr:
+#     command: "uvx"
+#     args: ["ocr-mcp"]
+#     env:
+#       MISTRAL_API_KEY: "your-mistral-api-key-here"
+#       DEEPSEEK_API_KEY: "your-deepseek-api-key-here"
+#       ENABLED_BACKENDS: "marker,deepseek,mistral"
+#       DEFAULT_BACKEND: "marker"
